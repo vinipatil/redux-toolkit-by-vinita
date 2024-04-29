@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import GroceryCard from './GroceryCard';
-import CartItem from './CartItem'; 
-import { addItem } from './cartSlice';
+import CartItem from './CartItem';
+import { addItem, incrementQuantity } from './cartSlice'; 
 import './App.css';
 
 const App = () => {
@@ -29,9 +29,19 @@ const App = () => {
   // Your cart items from the Redux store
   const cartItems = useSelector(state => state.cart.items);
 
-  // Function to handle adding an item to the cart
+  // Calculate total cost of all items in the cart
+  const totalCost = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+
   const handleAddToCart = (item) => {
-    dispatch(addItem(item)); // Dispatch the addItem action with the item as payload
+    const existingItem = cartItems.find(cartItem => cartItem.id === item.id);
+
+    if (existingItem) {
+      // If the item already exists, dispatch incrementQuantity action
+      dispatch(incrementQuantity({ id: item.id }));
+    } else {
+      // If the item doesn't exist, dispatch addItem action
+      dispatch(addItem(item));
+    }
   };
 
   return (
@@ -49,6 +59,7 @@ const App = () => {
         {cartItems.map(item => (
           <CartItem key={item.id} item={item} />
         ))}
+        <p>Total Cost: <b className='cost'>₹{totalCost}</b></p> 
       </div>
     </div>
   );
