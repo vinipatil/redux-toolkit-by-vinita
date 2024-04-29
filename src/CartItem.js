@@ -27,7 +27,7 @@ const CartItem = ({ item }) => {
       <img src={image} alt={name} className="cart-item-img" />
       <div>
         <h3>{name}</h3>
-        <p>${price}</p>
+        <p>₹{price}</p>
         <p>Quantity: {quantity}</p>
         <button onClick={handleIncrement}>+</button>
         <button onClick={handleDecrement}>-</button>
