@@ -13,7 +13,7 @@ const GroceryItem = ({ id, name, price, image }) => {
     <div className="grocery-item">
       <img src={image} alt={name} /> 
       <h3>{name}</h3>
-      <p>${price}</p>
+      <p>₹{price}</p>
       <button onClick={handleAddToCart}>Add to Cart</button>
     </div>
   );
